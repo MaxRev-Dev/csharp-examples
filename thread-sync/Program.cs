@@ -18,12 +18,13 @@ namespace csharp_dev
             Console.Read();
         }
 
+        private static int repeatSequenceFor = 3;
+
         private static async Task SyncSolution()
         {
             using var mutex = new Mutex();
             mutex.WaitOne(); // block others and wait for all threads to start
             var tasks = new List<Task>();
-            var repeatSequenceFor = 3;
             // run all threads
             for (char i = 'a'; i <= 'd'; i++)
             {
@@ -38,8 +39,6 @@ namespace csharp_dev
 
         private static Task AsyncSolution()
         {
-            var repeatSequenceFor = 3;
-
             var tasks = new List<Task>();
             // run all threads
             for (char i = 'a'; i <= 'd'; i++)
@@ -49,6 +48,7 @@ namespace csharp_dev
             }
             return Task.WhenAll(tasks);
         }
+
         private static async Task PrintTask(char v, int count)
         {
             await Task.Yield();
@@ -57,6 +57,7 @@ namespace csharp_dev
                 await DoWork(v);
             }
         }
+
         private static async Task PrintTask(char v, int count, Mutex writeSync)
         {
             await Task.Yield();
