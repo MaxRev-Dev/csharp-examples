@@ -30,13 +30,23 @@ namespace calc
                 new CoreOperation("+") {ButtonMap = Keys.Oemplus},
                 new CoreOperation("-") {ButtonMap = Keys.OemMinus},
                 new CoreOperation("*") {ButtonMap = Keys.D8, Modifiers = Keys.Shift},
-                new CoreOperation("!") {ButtonMap = Keys.D1, Modifiers = Keys.Shift},
-                new CoreOperation("^") {ButtonMap = Keys.D6, Modifiers = Keys.Shift},
-                new CoreOperation("sqrt", "\u221A") {ButtonMap = Keys.S},
-                new CoreOperation("%") {ButtonMap = Keys.D5, Modifiers = Keys.Shift},
                 new CoreOperation("/") {ButtonMap = Keys.Divide},
                 new CoreOperation("(") {ButtonMap = Keys.D9, Modifiers = Keys.Shift},
-                new CoreOperation(")") {ButtonMap = Keys.D0, Modifiers = Keys.Shift}
+                new CoreOperation(")") {ButtonMap = Keys.D0, Modifiers = Keys.Shift},
+                new CoreOperation("%") {ButtonMap = Keys.D5, Modifiers = Keys.Shift},
+                new CoreOperation("sqrt", "\u221A") {ButtonMap = Keys.S},
+                new CoreOperation("^") {ButtonMap = Keys.D6, Modifiers = Keys.Shift},
+                new CoreOperation("!") {ButtonMap = Keys.D1, Modifiers = Keys.Shift},
+                new CoreOperation("exp"),
+                new CoreOperation("cos"),
+                new CoreOperation("sin"), 
+                new CoreOperation("tan"),
+                new CoreOperation("log"), 
+                new CoreOperation("log2"), 
+                new CoreOperation("log10"), 
+                new CoreOperation("rad"), 
+                new CoreOperation("deg"), 
+                new CoreOperation("inv")
             };
             buttons.AddRange(Enumerable.Range(0, 10)
                 .Select(value => new NumberOperation(value)
@@ -52,8 +62,8 @@ namespace calc
         {
             var button = new Button
             {
-                Size = new Size(70, 70),
-                Font = new Font(FontFamily.GenericMonospace, 22),
+                Size = new Size(80, 80),
+                Font = new Font(FontFamily.GenericMonospace, 20),
                 Text = operation.Represent
             };
             button.Click += (s, e) =>
