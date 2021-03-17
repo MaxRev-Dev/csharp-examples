@@ -17,7 +17,7 @@ namespace calc
 
         public float RawValue
         {
-            get => (float) Math.Round(_rawValue + _fraction, 5);
+            get => _rawValue + _fraction;
             private set => _rawValue = value;
         }
 
@@ -32,7 +32,7 @@ namespace calc
                     _fraction = cx.RawValue / 10;
                 }
                 else
-                    _fraction = _fraction / (float)Math.Pow(10, _fractionCounter) + cx.RawValue;
+                    _fraction += cx.RawValue / (float)Math.Pow(10, _fractionCounter) ;
                 _fractionCounter++;
             }
             else
