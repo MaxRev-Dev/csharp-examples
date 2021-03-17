@@ -4,14 +4,13 @@
     {
         public ClearAllOperation() : base("MC")
         {
-
         }
+
+        public override bool IsCommand => true;
 
         public void Execute(StateMachine stm)
         {
             stm.Clear();
         }
-
-        public override bool IsCommand => true;
     }
 }

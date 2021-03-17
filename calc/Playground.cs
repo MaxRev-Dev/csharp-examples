@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
@@ -25,19 +24,19 @@ namespace calc
                 new RecordOperation(),
                 new LoadOperation(),
                 new ClearAllOperation(),
-                new ClearLastOperation(){ ButtonMap = Keys.Back},
-                new CoreOperation("."){ ButtonMap = Keys.OemPeriod},
-                new CoreOperation("="){ ButtonMap = Keys.Oemplus,Modifiers = Keys.Shift},
-                new CoreOperation("+"){ ButtonMap = Keys.Oemplus},
-                new CoreOperation("-"){ ButtonMap = Keys.OemMinus},
-                new CoreOperation("*"){ ButtonMap = Keys.D8,Modifiers =Keys.Shift},
-                new CoreOperation("!"){ ButtonMap = Keys.D1,Modifiers =Keys.Shift},
-                new CoreOperation("^"){ ButtonMap = Keys.D6,Modifiers =Keys.Shift},
-                new CoreOperation("sqrt", "\u221A"){ ButtonMap = Keys.S},
-                new CoreOperation("%"){ ButtonMap = Keys.D5 ,Modifiers = Keys.Shift},
-                new CoreOperation("/"){ ButtonMap = Keys.Divide},
-                new CoreOperation("("){ ButtonMap = Keys.D9,Modifiers =Keys.Shift},
-                new CoreOperation(")"){ ButtonMap = Keys.D0,Modifiers =Keys.Shift},
+                new ClearLastOperation {ButtonMap = Keys.Back},
+                new CoreOperation(".") {ButtonMap = Keys.OemPeriod},
+                new CoreOperation("=") {ButtonMap = Keys.Oemplus, Modifiers = Keys.Shift},
+                new CoreOperation("+") {ButtonMap = Keys.Oemplus},
+                new CoreOperation("-") {ButtonMap = Keys.OemMinus},
+                new CoreOperation("*") {ButtonMap = Keys.D8, Modifiers = Keys.Shift},
+                new CoreOperation("!") {ButtonMap = Keys.D1, Modifiers = Keys.Shift},
+                new CoreOperation("^") {ButtonMap = Keys.D6, Modifiers = Keys.Shift},
+                new CoreOperation("sqrt", "\u221A") {ButtonMap = Keys.S},
+                new CoreOperation("%") {ButtonMap = Keys.D5, Modifiers = Keys.Shift},
+                new CoreOperation("/") {ButtonMap = Keys.Divide},
+                new CoreOperation("(") {ButtonMap = Keys.D9, Modifiers = Keys.Shift},
+                new CoreOperation(")") {ButtonMap = Keys.D0, Modifiers = Keys.Shift}
             };
             buttons.AddRange(Enumerable.Range(0, 10)
                 .Select(value => new NumberOperation(value)
@@ -45,10 +44,7 @@ namespace calc
                     ButtonMap = Enum.Parse<Keys>("D" + value)
                 }));
             _symbolMapping = buttons.ToArray();
-            foreach (var operation in buttons)
-            {
-                BindButton(flowLayoutPanel1, operation, _stm);
-            }
+            foreach (var operation in buttons) BindButton(flowLayoutPanel1, operation, _stm);
         }
 
 
@@ -79,14 +75,9 @@ namespace calc
         private void Playground_KeyDown(object sender, KeyEventArgs e)
         {
             foreach (var sym in _symbolMapping)
-            {
                 if (sym.Modifiers == e.Modifiers &&
                     e.KeyCode == sym.ButtonMap)
-                {
                     sym.OnActionCall();
-                }
-            }
-
         }
     }
 }

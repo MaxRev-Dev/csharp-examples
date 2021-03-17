@@ -6,10 +6,11 @@
         {
         }
 
+        public override bool IsCommand => true;
+
         public void Execute(StateMachine stm)
         {
             stm.MemPop();
         }
-        public override bool IsCommand => true;
     }
 }

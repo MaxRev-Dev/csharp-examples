@@ -7,6 +7,16 @@ namespace calc
 {
     internal class StateMachine
     {
+        /// <summary>
+        ///     Holds current operation stack
+        /// </summary>
+        private List<Operation> OperatorStack { get; } = new();
+
+        /// <summary>
+        ///     Holds MS values
+        /// </summary>
+        public Stack<NumberOperation> MemoryStack { get; } = new();
+
         public bool Execute(Operation operation, out float result, out string error)
         {
             try
@@ -26,13 +36,8 @@ namespace calc
 
         public void Add(Operation operation)
         {
-            this.OperatorStack.Add(operation);
+            OperatorStack.Add(operation);
         }
-
-        /// <summary>
-        /// Holds current operation stack
-        /// </summary>
-        private List<Operation> OperatorStack { get; } = new();
 
         private Queue<Operation> CvtToPolishNotation(IEnumerable<Operation> commands)
         {
@@ -40,12 +45,13 @@ namespace calc
             var final = new Queue<Operation>();
 
             // support several digits numbers
-            bool numberTrailing = false;
+            var numberTrailing = false;
 
             void Enqueue(Operation op)
             {
                 final.Enqueue(op.Clone());
             }
+
             foreach (var cx in commands.Where(x => x.Value != "="))
             {
                 var x = cx.Value;
@@ -66,11 +72,13 @@ namespace calc
                 {
                     if (numberTrailing)
                     {
-                        var no2 = (NumberOperation)final.Last();
+                        var no2 = (NumberOperation) final.Last();
                         no2.Trailing(no1);
                     }
                     else
+                    {
                         Enqueue(cx);
+                    }
 
                     numberTrailing = true;
                 }
@@ -78,23 +86,17 @@ namespace calc
                 {
                     numberTrailing = false;
                     if (operators.Count > 0 && operators.Peek().Value != Operation.OpenBracket)
-                    {
                         if (so.Priority <= operators.Peek().Priority)
-                        {
                             Enqueue(operators.Pop());
-                        }
-                    }
                     if (operators.Count > 0 && operators.Peek().Value != Operation.OpenBracket
                                             && so.Priority < operators.Peek().Priority)
-                    {
                         Enqueue(operators.Pop());
-                    }
                     operators.Push(so);
                 }
                 else if (cx.Value == ".")
                 {
                     numberTrailing = true;
-                    var no2 = (NumberOperation)final.Last();
+                    var no2 = (NumberOperation) final.Last();
                     no2.TrailingDot();
                 }
                 else
@@ -102,12 +104,10 @@ namespace calc
                     if (!operators.Any())
                         continue;
                     var op = operators.Pop();
-                    if (op.Value != Operation.OpenBracket)
-                    {
-                        Enqueue(op);
-                    }
+                    if (op.Value != Operation.OpenBracket) Enqueue(op);
                 }
             }
+
             while (operators.Count > 0)
             {
                 var c = operators.Pop();
@@ -118,7 +118,7 @@ namespace calc
         }
 
         /// <summary>
-        /// Evaluates calculation input using RPN
+        ///     Evaluates calculation input using RPN
         /// </summary>
         /// <returns></returns>
         public float Evaluate()
@@ -165,10 +165,8 @@ namespace calc
                 }
 
                 if (current is NumberOperation nv)
-                {
                     // input is not fulfilled
                     return nv.RawValue;
-                }
             }
 
             return result;
@@ -179,24 +177,17 @@ namespace calc
             var str = new StringBuilder();
 
             foreach (var operation in OperatorStack)
-            {
                 if (operation.Value != "=")
                     str.Append(operation.Represent);
-            }
 
             return str.ToString();
         }
 
         public void MemPush()
         {
-            var op = this.Evaluate();
+            var op = Evaluate();
             MemoryStack.Push(new NumberOperation(op));
         }
-
-        /// <summary>
-        /// Holds MS values
-        /// </summary>
-        public Stack<NumberOperation> MemoryStack { get; } = new();
 
         public void MemPop()
         {

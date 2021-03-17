@@ -5,9 +5,9 @@ namespace calc
 {
     internal class NumberOperation : Operation
     {
-        private bool _fractionTrailing;
         private float _fraction;
         private int _fractionCounter = 1;
+        private bool _fractionTrailing;
         private float _rawValue;
 
         public NumberOperation(float value) : base(value.ToString(CultureInfo.InvariantCulture))
@@ -28,11 +28,9 @@ namespace calc
             if (_fractionTrailing)
             {
                 if (_fractionCounter == 1)
-                {
                     _fraction = cx.RawValue / 10;
-                }
                 else
-                    _fraction += cx.RawValue / (float)Math.Pow(10, _fractionCounter) ;
+                    _fraction += cx.RawValue / (float) Math.Pow(10, _fractionCounter);
                 _fractionCounter++;
             }
             else
