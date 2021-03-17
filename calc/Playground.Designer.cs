@@ -32,7 +32,6 @@
             this.tabPageCalc = new System.Windows.Forms.TabPage();
             this.resultBox = new System.Windows.Forms.TextBox();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
-            this.tabPage2 = new System.Windows.Forms.TabPage();
             this.tabControl1.SuspendLayout();
             this.tabPageCalc.SuspendLayout();
             this.SuspendLayout();
@@ -40,7 +39,6 @@
             // tabControl1
             // 
             this.tabControl1.Controls.Add(this.tabPageCalc);
-            this.tabControl1.Controls.Add(this.tabPage2);
             this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
             this.tabControl1.Name = "tabControl1";
@@ -84,16 +82,6 @@
             this.flowLayoutPanel1.Size = new System.Drawing.Size(775, 317);
             this.flowLayoutPanel1.TabIndex = 0;
             // 
-            // tabPage2
-            // 
-            this.tabPage2.Location = new System.Drawing.Point(4, 24);
-            this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(792, 422);
-            this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "tabPage2";
-            this.tabPage2.UseVisualStyleBackColor = true;
-            // 
             // Playground
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -116,7 +104,6 @@
 
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.TabPage tabPageCalc;
-        private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
         private System.Windows.Forms.TextBox resultBox;
     }

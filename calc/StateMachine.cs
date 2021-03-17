@@ -99,7 +99,7 @@ namespace calc
                 }
                 else
                 {
-                    if (!operators.Any()) 
+                    if (!operators.Any())
                         continue;
                     var op = operators.Pop();
                     if (op.Value != Operation.OpenBracket)
@@ -189,9 +189,8 @@ namespace calc
 
         public void MemPush()
         {
-            var op = OperatorStack.Last();
-            if (op is NumberOperation no)
-                MemoryStack.Push(no);
+            var op = this.Evaluate();
+            MemoryStack.Push(new NumberOperation(op));
         }
 
         /// <summary>
