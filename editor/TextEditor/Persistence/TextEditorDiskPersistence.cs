@@ -3,9 +3,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using EditorProject.TextEditor.Abstractions;
-using EditorProject.TextEditor.Operations;
 
-namespace EditorProject.TextEditor
+namespace EditorProject.TextEditor.Persistence
 {
     public class TextEditorControlsDiskPersistence : ITextEditorControls
     {

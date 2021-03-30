@@ -8,6 +8,7 @@ using EditorProject.Calculator.Abstractions;
 using EditorProject.Calculator.Operations;
 using EditorProject.TextEditor;
 using EditorProject.TextEditor.Extensions;
+using EditorProject.TextEditor.Persistence;
 
 namespace EditorProject
 {

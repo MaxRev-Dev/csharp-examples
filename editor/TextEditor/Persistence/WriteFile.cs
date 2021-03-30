@@ -3,7 +3,7 @@ using System.Text;
 using System.Threading.Tasks;
 using EditorProject.TextEditor.Abstractions;
 
-namespace EditorProject.TextEditor.Operations
+namespace EditorProject.TextEditor.Persistence
 {
     public class WriteFile : ITextEditorOperation
     {

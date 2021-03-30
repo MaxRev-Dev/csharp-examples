@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace EditorProject
+namespace EditorProject.TextEditor.Abstractions
 {
     public interface ITextEditorControls
     {
