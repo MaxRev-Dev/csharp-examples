@@ -1,14 +1,13 @@
-﻿using System;
+﻿using EditorProject.Calculator;
+using EditorProject.Calculator.Abstractions;
+using EditorProject.Calculator.Operations;
+using EditorProject.TextEditor.Extensions;
+using EditorProject.TextEditor.Persistence;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
-using EditorProject.Calculator;
-using EditorProject.Calculator.Abstractions;
-using EditorProject.Calculator.Operations;
-using EditorProject.TextEditor;
-using EditorProject.TextEditor.Extensions;
-using EditorProject.TextEditor.Persistence;
 
 namespace EditorProject
 {

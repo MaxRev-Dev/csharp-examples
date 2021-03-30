@@ -7,6 +7,11 @@ namespace EditorProject.TextEditor.Extensions
 {
     public static class ExtensionMethods
     {
+        /// <summary>
+        /// Just create hierarchical controls via maps 
+        /// </summary>
+        /// <param name="ts"></param>
+        /// <param name="editorActions"></param>
         public static void EnableControls(this ToolStrip ts,
             IDictionary<string, Dictionary<string, (Action onInvoke, Func<bool> onValidation)>> editorActions)
         {
@@ -23,13 +28,14 @@ namespace EditorProject.TextEditor.Extensions
                     {
                         Text = action.Key
                     };
-                    actionItem.Click += (sender, e) => action.Value.onInvoke?.Invoke(); 
+                    // invoke action click delegate
+                    actionItem.Click += (sender, e) => action.Value.onInvoke?.Invoke();
+                    // validate to enable
                     fileItem.DropDown.Opening += (s, e) => actionItem.Enabled = action.Value.onValidation?.Invoke() ?? false;
                     fileItem.DropDownItems.Add(actionItem);
                 }
 
                 ts.Items.Add(fileItem);
-
             }
         }
 
