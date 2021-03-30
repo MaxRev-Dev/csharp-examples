@@ -1,4 +1,4 @@
-﻿namespace calc
+﻿namespace EditorProject.Calculator.Abstractions
 {
     internal interface IServiceOperation
     {

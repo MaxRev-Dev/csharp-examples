@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Linq;
+using EditorProject.Calculator.Abstractions;
 
-namespace calc
+namespace EditorProject.Calculator.Operations
 {
     internal class CoreOperation : Operation
     {

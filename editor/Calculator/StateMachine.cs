@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using EditorProject.Calculator.Abstractions;
+using EditorProject.Calculator.Operations;
 
-namespace calc
+namespace EditorProject.Calculator
 {
     internal class StateMachine
     {

@@ -1,4 +1,6 @@
-﻿namespace calc
+﻿using EditorProject.Calculator.Abstractions;
+
+namespace EditorProject.Calculator.Operations
 {
     internal class LoadOperation : Operation, IServiceOperation
     {
