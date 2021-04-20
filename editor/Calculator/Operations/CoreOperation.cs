@@ -6,7 +6,8 @@ namespace EditorProject.Calculator.Operations
 {
     internal class CoreOperation : Operation
     {
-        private const float G = 7; // g represents the precision desired, p is the values of p[i] to plug into Lanczos' formula
+        private const float
+            G = 7; // g represents the precision desired, p is the values of p[i] to plug into Lanczos' formula
 
         private static readonly double[] _p =
         {
@@ -43,36 +44,36 @@ namespace EditorProject.Calculator.Operations
         private float FactorialOfCore(float n)
         {
             if (Math.Abs(n - Math.Floor(n)) < 0.0001)
-                return Enumerable.Range(1, (int)n).Aggregate(1, (p, item) => p * item);
+                return Enumerable.Range(1, (int) n).Aggregate(1, (p, item) => p * item);
 
             return FactorialOf(n);
         }
 
         private float FactorialOf(float n)
         {
-            if (n < 0.5) return (float)(Math.PI / Math.Sin(n * Math.PI) / FactorialOf(1 - n));
+            if (n < 0.5) return (float) (Math.PI / Math.Sin(n * Math.PI) / FactorialOf(1 - n));
 
             n--;
             var x = _p[0];
             for (var i = 1; i < G + 2; i++) x += _p[i] / (n + i);
             var t = n + G + 0.5;
-            return (float)(Math.Sqrt(2 * Math.PI) * Math.Pow(t, n + 0.5) * Math.Exp(-t) * x);
+            return (float) (Math.Sqrt(2 * Math.PI) * Math.Pow(t, n + 0.5) * Math.Exp(-t) * x);
         }
 
         public float ExecuteUnaryOperation(float lhs)
         {
             return Value switch
             {
-                "sqrt" => (float)Math.Sqrt(lhs),
-                "exp" => (float)Math.Exp(lhs),
-                "sin" => (float)Math.Sin(lhs),
-                "cos" => (float)Math.Cos(lhs),
-                "tan" => (float)Math.Tan(lhs),
-                "log" => (float)Math.Log(lhs),
-                "log10" => (float)Math.Log10(lhs),
-                "log2" => (float)Math.Log2(lhs),
-                "rad" => (float)(Math.PI * lhs / 180),
-                "deg" => (float)(180 * lhs / Math.PI),
+                "sqrt" => (float) Math.Sqrt(lhs),
+                "exp" => (float) Math.Exp(lhs),
+                "sin" => (float) Math.Sin(lhs),
+                "cos" => (float) Math.Cos(lhs),
+                "tan" => (float) Math.Tan(lhs),
+                "log" => (float) Math.Log(lhs),
+                "log10" => (float) Math.Log10(lhs),
+                "log2" => (float) Math.Log2(lhs),
+                "rad" => (float) (Math.PI * lhs / 180),
+                "deg" => (float) (180 * lhs / Math.PI),
                 "inv" => 1 / lhs,
                 "!" => FactorialOfCore(lhs),
                 _ => throw new ArgumentOutOfRangeException(nameof(Value))
@@ -88,7 +89,7 @@ namespace EditorProject.Calculator.Operations
                 "-" => lhs - rhs,
                 "*" => lhs * rhs,
                 "/" => lhs / rhs,
-                "^" => (float)Math.Pow(lhs, rhs),
+                "^" => (float) Math.Pow(lhs, rhs),
                 "%" => lhs % rhs,
                 _ => throw new ArgumentOutOfRangeException(nameof(Value))
             };

@@ -9,12 +9,12 @@ namespace EditorProject.TextEditor.Persistence
     public class TextEditorControlsDiskPersistence : ITextEditorControls
     {
         private readonly RichTextBox _control;
-        private readonly Action<string> _onInfoMessage;
         private readonly Action<string> _onErrorMessage;
+        private readonly Action<string> _onInfoMessage;
         private readonly ITextEditorOperation _readOperation;
         private readonly ITextEditorOperation _writeOperation;
-        private string _fileFilterDefault = @"Text file|*.txt|RichTextFile|*.rtf";
         private EditorOperationContext _context;
+        private readonly string _fileFilterDefault = @"Text file|*.txt|RichTextFile|*.rtf";
 
         public TextEditorControlsDiskPersistence(RichTextBox editorTextBox,
             Action<string> onInfoMessage, Action<string> onErrorMessage)
@@ -28,7 +28,7 @@ namespace EditorProject.TextEditor.Persistence
 
         public async Task Open()
         {
-            var fileDialog = new OpenFileDialog { Filter = _fileFilterDefault };
+            var fileDialog = new OpenFileDialog {Filter = _fileFilterDefault};
             var dialogResult = fileDialog.ShowDialog(_control.Parent);
 
             if (dialogResult != DialogResult.OK) return;
@@ -46,7 +46,6 @@ namespace EditorProject.TextEditor.Persistence
                     _control.Text = _context.StringBuffer.ToString();
                     PostProcessContext();
                 }));
-
             }
             catch (Exception ex)
             {
@@ -63,13 +62,47 @@ namespace EditorProject.TextEditor.Persistence
                 _control.Invoke(new Action(PostProcessContext));
             }
             else
+            {
                 await SaveAs();
+            }
         }
-        public Task SaveAs() => SaveAsCore(false);
+
+        public Task SaveAs()
+        {
+            return SaveAsCore(false);
+        }
+
+        public async Task Create()
+        {
+            if (_control.TextLength > 0)
+            {
+                var result = MessageBox.Show(@"Do you wan't to save file?", @"Save or clear",
+                    MessageBoxButtons.YesNoCancel, MessageBoxIcon.Exclamation);
+                if (result == DialogResult.Cancel) return;
+                if (result == DialogResult.No) _control.Clear();
+                if (result == DialogResult.OK) await SaveAsCore(true);
+            }
+
+            var fileDialog = new OpenFileDialog
+            {
+                Filter = _fileFilterDefault,
+                CheckFileExists = false
+            };
+            var dialogResult = fileDialog.ShowDialog(_control.Parent);
+
+            if (dialogResult != DialogResult.OK) return;
+
+            _context = new EditorOperationContext
+            {
+                FileName = fileDialog.FileName
+            };
+
+            _control.Invoke(new Action(PostProcessContext));
+        }
 
         public async Task SaveAsCore(bool cleanUpAfter)
         {
-            var fileDialog = new SaveFileDialog { Filter = _fileFilterDefault };
+            var fileDialog = new SaveFileDialog {Filter = _fileFilterDefault};
             var dialogResult = fileDialog.ShowDialog(_control.Parent);
 
             if (dialogResult != DialogResult.OK) return;
@@ -94,37 +127,6 @@ namespace EditorProject.TextEditor.Persistence
         {
             if (!string.IsNullOrEmpty(_context.Message))
                 _onInfoMessage.Invoke(_context.Message);
-        }
-
-        public async Task Create()
-        {
-            if (_control.TextLength > 0)
-            {
-                var result = MessageBox.Show(@"Do you wan't to save file?", @"Save or clear",
-                    MessageBoxButtons.YesNoCancel, MessageBoxIcon.Exclamation);
-                if (result == DialogResult.Cancel) return;
-                if (result == DialogResult.No) _control.Clear();
-                if (result == DialogResult.OK)
-                {
-                    await SaveAsCore(true);
-                }
-            }
-
-            var fileDialog = new OpenFileDialog
-            {
-                Filter = _fileFilterDefault,
-                CheckFileExists = false
-            };
-            var dialogResult = fileDialog.ShowDialog(_control.Parent);
-
-            if (dialogResult != DialogResult.OK) return;
-
-            _context = new EditorOperationContext
-            {
-                FileName = fileDialog.FileName,
-            };
-            
-            _control.Invoke(new Action(PostProcessContext));
         }
     }
 }

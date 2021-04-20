@@ -8,7 +8,7 @@ namespace EditorProject.TextEditor.Extensions
     public static class ExtensionMethods
     {
         /// <summary>
-        /// Just create hierarchical controls via maps 
+        ///     Just create hierarchical controls via maps
         /// </summary>
         /// <param name="ts"></param>
         /// <param name="editorActions"></param>
@@ -19,7 +19,7 @@ namespace EditorProject.TextEditor.Extensions
             {
                 var fileItem = new ToolStripDropDownButton
                 {
-                    Text = dropAction.Key,
+                    Text = dropAction.Key
                 };
 
                 foreach (var action in dropAction.Value)
@@ -31,7 +31,8 @@ namespace EditorProject.TextEditor.Extensions
                     // invoke action click delegate
                     actionItem.Click += (sender, e) => action.Value.onInvoke?.Invoke();
                     // validate to enable
-                    fileItem.DropDown.Opening += (s, e) => actionItem.Enabled = action.Value.onValidation?.Invoke() ?? false;
+                    fileItem.DropDown.Opening += (s, e) =>
+                        actionItem.Enabled = action.Value.onValidation?.Invoke() ?? false;
                     fileItem.DropDownItems.Add(actionItem);
                 }
 
@@ -40,8 +41,9 @@ namespace EditorProject.TextEditor.Extensions
         }
 
         /// <summary>
-        /// Adapter from here 
-        /// <see href="https://ourcodeworld.com/articles/read/1094/how-to-implement-a-copy-cut-and-paste-context-menu-over-a-rich-text-box-in-winforms-c-sharp"/>
+        ///     Adapter from here
+        ///     <see
+        ///         href="https://ourcodeworld.com/articles/read/1094/how-to-implement-a-copy-cut-and-paste-context-menu-over-a-rich-text-box-in-winforms-c-sharp" />
         /// </summary>
         public static void EnableContextMenu(this RichTextBox rtb)
         {
@@ -52,7 +54,7 @@ namespace EditorProject.TextEditor.Extensions
 
         public static ContextMenuStrip GetContextMenuStrip(RichTextBox rtb)
         {
-            var cms = new ContextMenuStrip { ShowImageMargin = false };
+            var cms = new ContextMenuStrip {ShowImageMargin = false};
 
             var tsmiUndo = new ToolStripMenuItem("Undo");
             tsmiUndo.Click += (sender, e) => rtb.Undo();
